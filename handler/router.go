@@ -9,5 +9,6 @@ import (
 func GetRouter() http.Handler {
 	router := httprouter.New()
 	router.GET("/ping", ping)
+	router.GET("/setData", setData)
 	return router
 }

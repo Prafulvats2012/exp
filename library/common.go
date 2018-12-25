@@ -52,7 +52,7 @@ func writeJSONResponse(d []byte, code int, rd *RequestData) {
 	rd.w.Write(d)
 }
 
-func writeJSONMessage(msg string, msgType string, httpCode int, rd *RequestData) {
+func WriteJSONMessage(msg string, msgType string, httpCode int, rd *RequestData) {
 	d, code := jsonifyMessage(msg, msgType, httpCode)
 	writeJSONResponse(d, code, rd)
 }
@@ -60,7 +60,7 @@ func writeJSONMessage(msg string, msgType string, httpCode int, rd *RequestData)
 func WriteJSONResponse(i interface{}, code int, rd *RequestData) {
 	d, err := json.Marshal(i)
 	if err != nil {
-		writeJSONMessage("Unable to marshal data. Err: "+err.Error(), ERR_MSG, http.StatusInternalServerError, rd)
+		WriteJSONMessage("Unable to marshal data. Err: "+err.Error(), ERR_MSG, http.StatusInternalServerError, rd)
 		return
 	}
 	writeJSONResponse(d, code, rd)
