@@ -6,7 +6,6 @@ import (
 	"exp/library"
 	"exp/services"
 	"fmt"
-	"lynk/dbLibrary/config/globals"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -26,13 +25,15 @@ func setData(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	req := &dtos.SetDataReq{}
 	err := decoder.Decode(req)
 	if err != nil {
-		globals.Logger.Error("Error while Decoding request params", err)
+		fmt.Print("Error while Decoding request params", err)
 		library.WriteJSONMessage(err.Error(), library.ERR_MSG, http.StatusBadRequest, rd)
 		return
 	}
 
 	fmt.Print("SetData request params:", req)
-	resp := services.SetData(req)
+
+	setDataObj := services.New()
+	resp := setDataObj.SetData(req)
 
 	res := dtos.SteDataRes{}
 	res.Success = "false"
